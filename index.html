@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Map</title>
+    <!-- Mapbox GL JS -->
+    <script src=https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js></script>
+    <link href=https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css rel="stylesheet" />
+
+    <!-- Mapbox GL Directions -->
+    <script
+        src=https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js></script>
+    <link rel="stylesheet"
+        href=https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css
+        type="text/css" />
+
+    <!-- Turf & Polyline -->
+    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/mapbox-polyline/1.1.1/polyline.js></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="map"></div>
+    <div class="sidebar">
+      <div class="heading">
+        <h1>Routes</h1>
+      </div>
+      <div id="reports" class="reports"></div>
+    </div>
+    
+    <script type="text/javascript" src="JS/accessToken.js"></script>
+    <script type="text/javascript" src="JS/navAndObstacle.js"></script>
+
+</body>
+
+</html>
