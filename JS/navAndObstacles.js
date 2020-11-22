@@ -1,13 +1,3 @@
-mapboxgl.accessToken = "pk.eyJ1Ijoia3VtdWRzaGFuZGlseWEiLCJhIjoiY2tocHo4bW9mMG9odDJzcDVhbDZ5Ymw1MyJ9.-K1HV9V4_SBAvw-wQl3LTw";
-
-/* Creating Map */
-var map = new mapboxgl.Map({
-    container: "map",
-    style: "mapbox://styles/mapbox/light-v10",
-    center: [77.10, 28.70],
-    zoom: 5
-});
-
 let clearances = {
     type: "FeatureCollection",
     features: []
@@ -77,58 +67,58 @@ map.on("load", function (e) {
     });
 
     for (i = 0; i <= 2; i++) {
-      map.addSource("route" + i, {
-        type: "geojson",
-        data: {
-          type: "Feature",
-        },
-      });
+        map.addSource("route" + i, {
+            type: "geojson",
+            data: {
+            type: "Feature",
+            },
+        });
     
-      map.addLayer({
-        id: "route" + i,
-        type: "line",
-        source: "route" + i,
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
-        },
-        paint: {
-          "line-color": "#cccccc",
-          "line-opacity": 0.5,
-          "line-width": 13,
-          "line-blur": 0.5,
-        },
-      });
+        map.addLayer({
+            id: "route" + i,
+            type: "line",
+            source: "route" + i,
+            layout: {
+            "line-join": "round",
+            "line-cap": "round",
+            },
+            paint: {
+            "line-color": "#cccccc",
+            "line-opacity": 0.5,
+            "line-width": 13,
+            "line-blur": 0.5,
+            },
+        });
     }
-  });
+});
 
-  var nav = new mapboxgl.NavigationControl();
-  var directions = new MapboxDirections({
-      accessToken: mapboxgl.accessToken,
-      unit: "metric",
-      profile: "mapbox/driving",
-      alternatives: "true",
-      geometries: "geojson",
-  });
-  map.scrollZoom.enable();
-  map.addControl(directions, "top-right");
+var nav = new mapboxgl.NavigationControl();
+var directions = new MapboxDirections({
+    accessToken: mapboxgl.accessToken,
+    unit: "metric",
+    profile: "mapbox/driving",
+    alternatives: "true",
+    geometries: "geojson",
+});
+map.scrollZoom.enable();
+map.addControl(directions, "top-right");
 
-  directions.on("route", (e) => {
-    var reports = document.getElementById("reports");
-    reports.innerHTML = "";
-    var report = reports.appendChild(document.createElement("div"));
-    let routes = e.route;
+directions.on("route", (e) => {
+var reports = document.getElementById("reports");
+reports.innerHTML = "";
+var report = reports.appendChild(document.createElement("div"));
+let routes = e.route;
 
-    //Hide all routes by setting the opacity to zero.
-    for (i = 0; i < 3; i++) {
-      map.setLayoutProperty("route" + i, "visibility", "none");
-    }
+//Hide all routes by setting the opacity to zero.
+for (i = 0; i < 3; i++) {
+    map.setLayoutProperty("route" + i, "visibility", "none");
+}
 
-    routes.forEach(function (route, i) {
-      route.id = i;
-    });
+routes.forEach(function (route, i) {
+    route.id = i;
+});
 
-    routes.forEach((e) => {
+routes.forEach((e) => {
     //Make each route visible, by setting the opacity to 50%.
     map.setLayoutProperty("route" + e.id, "visibility", "visible");
 
@@ -176,7 +166,7 @@ map.on("load", function (e) {
 
     // Add details to the individual report.
     var details = report.appendChild(document.createElement("div"));
-    details.innerHTML = "This route " + detail + " through an avoidance area.";
-    report.appendChild(document.createElement("hr"));
+        details.innerHTML = "This route " + detail + " through an avoidance area.";
+        report.appendChild(document.createElement("hr"));
     });
-  });
+});
