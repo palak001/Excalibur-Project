@@ -109,3 +109,10 @@ a:hover {
     background: #00853e;
     border-radius: 0;
 }
+
+
+.navMap-casesHead{
+    display: block;
+    color: blue;
+    font-weight: 700;
+}

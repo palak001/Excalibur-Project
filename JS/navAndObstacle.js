@@ -1,3 +1,5 @@
+// import {getDailyCases} from './dailyCases.js';
+
 var clearances = {
     type: "FeatureCollection",
     features: [
@@ -5,7 +7,7 @@ var clearances = {
             type: "Feature",
             geometry: {
                 type: "Point",
-                coordinates: [-84.47426, 38.06673],
+                coordinates: [77.13909, 28.61142],
             },
             properties: {
                 clearance: "13' 2",
@@ -15,7 +17,7 @@ var clearances = {
             type: "Feature",
             geometry: {
                 type: "Point",
-                coordinates: [-84.47208, 38.06694],
+                coordinates: [77.15391, 28.65456],
             },
             properties: {
                 clearance: "13' 7",
@@ -74,7 +76,7 @@ var clearances = {
     ],
 };
 
-var obstacle = turf.buffer(clearances, 0.25, { units: "kilometers" });
+var obstacle = turf.buffer(clearances, 0.25, { units: "kilometers" });  //2nd parameter is the radius of the circle
 
 map.on("load", function (e) {
 
@@ -120,6 +122,9 @@ map.on("load", function (e) {
     }
 
 });
+
+
+//For navigation
 
 var nav = new mapboxgl.NavigationControl();
 
@@ -200,4 +205,85 @@ directions.on("route", (e) => {
         details.innerHTML = "This route " + detail + " through an avoidance area.";
         report.appendChild(document.createElement("hr"));
     });
+
+
+    // Get the name of cities to show daily cases
+    let getDailyCases = async () => {
+        const el = document.getElementsByClassName('mapboxgl-ctrl-geocoder');
+        const src = el[0].childNodes[1].value;
+        const dest = el[1].childNodes[1].value;
+
+        let srcTokens = src.split(',');
+        for (let i = 0; i < srcTokens.length; i++) {
+            srcTokens[i] = srcTokens[i].trim();
+        }
+
+        let srcState = srcTokens[srcTokens.length - 2];
+        console.log(srcTokens);
+
+        let destTokens = dest.split(',');
+        for (let i = 0; i < destTokens.length; i++) {
+            destTokens[i] = destTokens[i].trim();
+        }
+
+        let destState = destTokens[destTokens.length - 2];
+        console.log(destTokens);
+
+
+        let casesData = await fetch('https://api.covid19india.org/data.json');
+
+        casesData = await casesData.json();
+
+
+        //if src and dest are Chandigarh Capital, Dadra and Nagar Haveli and Daman and Diu
+        if (srcState === "Chandigarh capital") {
+            srcState = "Chandigarh";
+        }
+        if (srcState === "Daman and Diu" || srcState === "Dadra and Nagar Haveli") {
+            srcState = "Dadra and Nagar Haveli and Daman and Diu";
+        }
+
+        if (destState === "Chandigarh capital") {
+            destState = "Chandigarh";
+        }
+        if (destState === "Daman and Diu" || destState === "Dadra and Nagar Haveli") {
+            destState = "Dadra and Nagar Haveli and Daman and Diu";
+        }
+
+
+        let srcActiveCases = 0, destActiveCases = 0;
+
+        for (let i = 1; i < 38; i++) {
+            const obj = casesData.statewise[i];
+            if (obj.state.toLowerCase() === srcState.toLowerCase()) {
+                srcActiveCases = obj.active;
+            }
+
+            if (obj.state.toLowerCase() === destState.toLowerCase()) {
+                destActiveCases = obj.active;
+            }
+
+        }
+
+
+        //Showing active cases for the states
+        let report = reports.appendChild(document.createElement("div"));
+        report.className = "item";
+        report.id = "navMap-report";
+        let heading = report.appendChild(document.createElement("h3"));
+
+        heading.innerHTML = "Active Cases: ";
+        heading.className = "navMap-casesHead";
+
+        let details = report.appendChild(document.createElement("div"));
+        details.innerHTML = srcState + " : " + srcActiveCases;
+        details = report.appendChild(document.createElement("div"));
+        details.innerHTML = destState + " : " + destActiveCases;
+        report.appendChild(document.createElement("hr"));
+        
+
+    }
+
+    getDailyCases();
+
 }); 
