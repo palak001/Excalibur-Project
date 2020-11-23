@@ -138,7 +138,17 @@
           </div>
           <div id="reports" class="reports"></div>
         </div>
+
+	<script src="https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js"></script>
+	<script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+
+
         <script>
+
+
+
+	
+
           mapboxgl.accessToken = "pk.eyJ1Ijoia3VtdWRzaGFuZGlseWEiLCJhIjoiY2tocHo4bW9mMG9odDJzcDVhbDZ5Ymw1MyJ9.-K1HV9V4_SBAvw-wQl3LTw";
           var map = new mapboxgl.Map({
             container: "map", // container id
@@ -226,7 +236,97 @@
             
             var obstacle = turf.buffer(clearances, 0.25, { units: "kilometers" });
             
-            map.on("load", function (e) {
+
+
+	    const getContaimentZones = async () => {
+
+		const containmentZones = await fetch(`https://api.covid19india.org/zones.json`);
+		containment_zones = await containmentZones.json();
+		console.log(containment_zones);
+        
+		function1(containment_zones);
+		
+
+	    }
+
+        
+        
+        
+        
+        const function1 = (containment_zones) => {
+            
+            var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+		var i = 1;
+       while(i<containment_zones.zones.length)
+		{
+		      
+			const str = JSON.stringify(containment_zones.zones[i].district);
+			
+			const district = str;
+			mapboxClient.geocoding.forwardGeocode({
+				query: district,
+				autocomplete: false,
+				limit: 1
+				})
+				.send()
+				.then(function (response) {
+					
+					console.log(response.body.features[0].center);
+
+					var clear = {
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: response.body.features[0].center,
+                },
+                properties: {
+                  clearance: "13' 2",
+                },
+              }]};
+
+
+
+
+					var obst = turf.buffer(clear, 100, { units: "kilometers" });
+					map.addLayer({
+    						id: "clear" + i,
+  						  type: "fill",
+ 						   source: {
+						      type: "geojson",
+      						data: obst,
+    						},
+   						 layout: {},
+   						 paint: {
+   						   "fill-color": "#f03b20",
+    						  "fill-opacity": 0.5,
+    						  "fill-outline-color": "#f03b20",
+    						},
+  						});
+				
+
+               
+                
+		}
+                      
+        
+            );
+            
+            i=i+1;
+            
+            
+        }
+        
+        
+        }
+        
+        map.on("load", function (e) {
+
+		getContaimentZones();
+
+
 
               map.addLayer({
                 id: "clearances",
@@ -267,9 +367,10 @@
                   "line-blur": 0.5,
                 },
               });
-            }
+            
 
-            });
+            };
+        });
             
             var nav = new mapboxgl.NavigationControl();
 
