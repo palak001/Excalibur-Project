@@ -1,4 +1,3 @@
-
 import { getActiveCases } from './activeCases';
 import * as contZones from './contZones';
 
@@ -238,4 +237,3 @@ directions.on("route", (e) => {
     renderActiveCases();
 
 });
-
