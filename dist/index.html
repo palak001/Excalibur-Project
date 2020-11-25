@@ -1,1 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Map</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <!-- Mapbox GL JS -->
+    <script src=https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js></script>
+    <link href=https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css rel="stylesheet" />
+
+    <!-- Mapbox GL Directions -->
+    <script
+        src=https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js></script>
+    <link rel="stylesheet"
+        href=https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css
+        type="text/css" />
+
+    <!-- Turf & Polyline -->
+    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/mapbox-polyline/1.1.1/polyline.js></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="map"></div>
+    <div class="sidebar">
+        <button class="navmap-btn" id="navmap-btn-red">Red Zones</button><br>
+        <button class="navmap-btn" id="navmap-btn-orange">Orange Zones</button>
+        <button class="navmap-btn" id="navmap-btn-green">Green Zones</button>
+        <div class="heading">
+            <h1>Routes</h1>
+        </div>
+        <div id="reports" class="reports"></div>
+    </div>
+    </div>
+
+
+    <script src="https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js"></script>
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+
+    <script type='text/javascript' src="js/accessToken.js"></script>
+    <!-- <script type='text/javascript' src="js/test.js"></script> -->
+
+    <!-- <script type='text/javascript' src="JS/navAndObstacle.js"></script> -->
+
+    <script src="js/bundle.js"></script>
+</body>
+
+</body>
+
+</html>
+
  
