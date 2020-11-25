@@ -1,100 +1,90 @@
 
-var clearances = {
-    type: "FeatureCollection",
-    features: [
-        {
-            type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: [77.13909, 28.61142],
-            },
-            properties: {
-                clearance: "13' 2",
-            },
-        },
-        {
-            type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: [77.15391, 28.65456],
-            },
-            properties: {
-                clearance: "13' 7",
-            },
-        },
-        {
-            type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: [-84.60485, 38.12184],
-            },
-            properties: {
-                clearance: "13' 7",
-            },
-        },
-        {
-            type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: [-84.61905, 37.87504],
-            },
-            properties: {
-                clearance: "12' 0",
-            },
-        },
-        {
-            type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: [-84.55946, 38.30213],
-            },
-            properties: {
-                clearance: "13' 6",
-            },
-        },
-        {
-            type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: [-84.27235, 38.04954],
-            },
-            properties: {
-                clearance: "13' 6",
-            },
-        },
-        {
-            type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: [-84.27264, 37.82917],
-            },
-            properties: {
-                clearance: "11' 6",
-            },
-        }
-    ],
-};
+import { getActiveCases } from './activeCases';
+import * as contZones from './contZones';
 
-var obstacle = turf.buffer(clearances, 0.25, { units: "kilometers" });  //2nd parameter is the radius of the circle
+let red_obstacle = {};
+let orange_obstacle = {};
+let green_obstacle = {};
 
+document.querySelector('#navmap-btn-red').addEventListener('click', () => {  
+    contZones.toggleRedZones();    
+});
+
+document.querySelector('#navmap-btn-orange').addEventListener('click', () => {  
+    contZones.toggleOrangeZones();    
+});
+
+document.querySelector('#navmap-btn-green').addEventListener('click', () => {  
+    contZones.toggleGreenZones();    
+});
+
+
+/*To get containment zones */
 map.on("load", function (e) {
 
-    map.addLayer({
-        id: "clearances",
-        type: "fill",
-        source: {
-            type: "geojson",
-            data: obstacle,
-        },
-        layout: {},
-        paint: {
-            "fill-color": "#f03b20",
-            "fill-opacity": 0.5,
-            "fill-outline-color": "#f03b20",
-        },
+    contZones.getContaimentZones().then(() => {
+
+        red_obstacle = turf.buffer(contZones.red_zone, 10, { units: "kilometers" });
+        orange_obstacle = turf.buffer(contZones.orange_zone, 10, { units: "kilometers" });
+        green_obstacle = turf.buffer(contZones.green_zone, 10, { units: "kilometers" });
+
+
+        console.log('layer added');
+        map.addLayer({
+            id: contZones.red_clearances,
+            type: "fill",
+            source: {
+                type: "geojson",
+                data: red_obstacle,
+            },
+            layout: {},
+            paint: {
+                "fill-color": "#FF0000",
+                "fill-opacity": 0.8,
+                "fill-outline-color": "#FF0000",
+            },
+        });
+
+
+        map.addLayer({
+            id: contZones.orange_clearances,
+            type: "fill",
+            source: {
+                type: "geojson",
+                data: orange_obstacle,
+            },
+            layout: {},
+            paint: {
+                "fill-color": "#ff4500",
+                "fill-opacity": 0.8,
+                "fill-outline-color": "#ff4500",
+            },
+        });
+
+        map.addLayer({
+            id: contZones.green_clearances,
+            type: "fill",
+            source: {
+                type: "geojson",
+                data: green_obstacle,
+            },
+            layout: {},
+            paint: {
+                "fill-color": "#74c476",
+                "fill-opacity": 0.8,
+                "fill-outline-color": "#74c476",
+            },
+        });
+
+
+        contZones.toggleRedZones();
+        contZones.toggleOrangeZones();
+        contZones.toggleGreenZones();
+
     });
 
 
+    /*For displaying routes */
     for (let i = 0; i <= 2; i++) {
         map.addSource("route" + i, {
             type: "geojson",
@@ -123,7 +113,7 @@ map.on("load", function (e) {
 });
 
 
-//For navigation
+// For navigation
 
 var nav = new mapboxgl.NavigationControl();
 
@@ -141,10 +131,13 @@ map.addControl(directions, "top-right");
 
 
 directions.on("route", (e) => {
+
+    // console.log('in direction1');
     var reports = document.getElementById("reports");
     reports.innerHTML = "";
     var report = reports.appendChild(document.createElement("div"));
     let routes = e.route;
+    report.className="item";
 
     //Hide all routes by setting the opacity to zero.
     for (let i = 0; i < 3; i++) {
@@ -161,26 +154,38 @@ directions.on("route", (e) => {
 
         //Get GeoJson LineString feature of route
         var routeLine = polyline.toGeoJSON(e.geometry);
-
+        // console.log(routeLine);
         //Update the data for the route, updating the visual.
         map.getSource("route" + e.id).setData(routeLine);
 
         var collision = "";
         var emoji = "";
-        var clear = turf.booleanDisjoint(obstacle, routeLine);
+        var red_danger = !(turf.booleanDisjoint(red_obstacle, routeLine));
+        var orange_danger = !(turf.booleanDisjoint(orange_obstacle, routeLine));
         let detail;
-        if (clear == true) {
-            collision = "is good!";
-            detail = "does not go";
-            emoji = "✔️";
-            report.className = "item";
-            map.setPaintProperty("route" + e.id, "line-color", "#74c476");
-        } else {
+
+        // console.log('in direction2');
+
+        if (red_danger == true) {
             collision = "is bad.";
-            detail = "goes";
-            emoji = "⚠️";
-            report.className = "item warning";
+            detail = "passes through a red zone";
+            emoji = ":(";
+            report.classList.add("warning");
             map.setPaintProperty("route" + e.id, "line-color", "#de2d26");
+
+        }
+        else if (orange_danger == true) {
+            collision = "is not good";
+            detail = "passes through an orange zone";
+            emoji = ":(";
+            report.classList.add("warning");
+            map.setPaintProperty("route" + e.id, "line-color", "#ff4500");
+        }
+        else {
+            collision = "is good!";
+            detail = "does not pass through an orange or a red zone";
+            emoji = "✔️";
+            map.setPaintProperty("route" + e.id, "line-color", "#74c476");
         }
 
         //Add a new report section to the sidebar.
@@ -191,99 +196,46 @@ directions.on("route", (e) => {
         var heading = report.appendChild(document.createElement("h3"));
 
         // Set the class type based on clear value.
-        if (clear == true) {
-            heading.className = "title";
-        } else {
+        if (red_danger == true || orange_danger == true) {
             heading.className = "warning";
+        } 
+        else {
+            heading.className = "title";
         }
 
         heading.innerHTML = emoji + " Route " + (e.id + 1) + " " + collision;
 
+        // console.log('in direction3');
+
         // Add details to the individual report.
         var details = report.appendChild(document.createElement("div"));
-        details.innerHTML = "This route " + detail + " through an avoidance area.";
+        details.innerHTML = "This route " + detail;
         report.appendChild(document.createElement("hr"));
+
     });
 
 
-    // Get the name of cities to show daily cases
-    let activeCases = async () => {
-        const el = document.getElementsByClassName('mapboxgl-ctrl-geocoder');
-        const src = el[0].childNodes[1].value;
-        const dest = el[1].childNodes[1].value;
+    // console.log("reached");
+    //To show active cases
+    let renderActiveCases = () => {
+        getActiveCases().then((cases) => {
+            let report = reports.appendChild(document.createElement("div"));
+            report.className = "item";
+            report.id = "navMap-report";
+            let heading = report.appendChild(document.createElement("h3"));
 
-        let srcTokens = src.split(',');
-        for (let i = 0; i < srcTokens.length; i++) {
-            srcTokens[i] = srcTokens[i].trim();
-        }
+            heading.innerHTML = "Active Cases: ";
+            heading.className = "navMap-casesHead";
 
-        let srcState = srcTokens[srcTokens.length - 2];
-        console.log(srcTokens);
-
-        let destTokens = dest.split(',');
-        for (let i = 0; i < destTokens.length; i++) {
-            destTokens[i] = destTokens[i].trim();
-        }
-
-        let destState = destTokens[destTokens.length - 2];
-        console.log(destTokens);
-
-
-        let casesData = await fetch('https://api.covid19india.org/data.json');
-
-        casesData = await casesData.json();
-
-
-        //if src and dest are Chandigarh Capital, Dadra and Nagar Haveli and Daman and Diu
-        if (srcState === "Chandigarh capital") {
-            srcState = "Chandigarh";
-        }
-        if (srcState === "Daman and Diu" || srcState === "Dadra and Nagar Haveli") {
-            srcState = "Dadra and Nagar Haveli and Daman and Diu";
-        }
-
-        if (destState === "Chandigarh capital") {
-            destState = "Chandigarh";
-        }
-        if (destState === "Daman and Diu" || destState === "Dadra and Nagar Haveli") {
-            destState = "Dadra and Nagar Haveli and Daman and Diu";
-        }
-
-
-        let srcActiveCases = 0, destActiveCases = 0;
-
-        for (let i = 1; i < 38; i++) {
-            const obj = casesData.statewise[i];
-            if (obj.state.toLowerCase() === srcState.toLowerCase()) {
-                srcActiveCases = obj.active;
-            }
-
-            if (obj.state.toLowerCase() === destState.toLowerCase()) {
-                destActiveCases = obj.active;
-            }
-
-        }
-
-
-        //Showing active cases for the states
-        let report = reports.appendChild(document.createElement("div"));
-        report.className = "item";
-        report.id = "navMap-report";
-        let heading = report.appendChild(document.createElement("h3"));
-
-        heading.innerHTML = "Active Cases: ";
-        heading.className = "navMap-casesHead";
-
-        let details = report.appendChild(document.createElement("div"));
-        details.innerHTML = srcState + " : " + srcActiveCases;
-        details = report.appendChild(document.createElement("div"));
-        details.innerHTML = destState + " : " + destActiveCases;
-        report.appendChild(document.createElement("hr"));
-        
-
+            let details = report.appendChild(document.createElement("div"));
+            details.innerHTML = cases[0] + " : " + cases[1];    //src
+            details = report.appendChild(document.createElement("div"));
+            details.innerHTML = cases[2] + " : " + cases[3];    //dest
+            report.appendChild(document.createElement("hr"));
+        });
     }
 
-    activeCases();
+    renderActiveCases();
 
-}); 
+});
 

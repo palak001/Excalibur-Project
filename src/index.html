@@ -30,9 +30,16 @@
     <div class="sidebar">
         <div class="heading">
             <h1>Routes</h1>
+            <button onclick="toggleRedZones()">Red Zones</button><br>
+            <button onclick="toggleOrangeZones()">Orange Zones</button>
+            <button onclick="toggleGreenZones()">Green Zones</button>
         </div>
-        <div id="reports" class="reports"></div>
     </div>
+    <div id="reports" class="reports"></div>
+    </div>
+    
+    <script src="https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js"></script>
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
 
     <script type='text/javascript' src="JS/accessToken.js"></script>
     <script type='text/javascript' src="JS/navAndObstacle.js"></script>
