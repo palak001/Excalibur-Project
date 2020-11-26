@@ -86,12 +86,10 @@ a:hover {
     font-weight: 400;
 }
 
-<<<<<<< HEAD
-.reports .item.active .title, .reports .item .title:hover {
-=======
+
 .reports .item.active .title,
 .reports .item .title:hover {
->>>>>>> 3ab03febdeb43619727b622346250ef89a1e7c77
+
     color: #8cc63f;
 }
 
