@@ -2,6 +2,7 @@ import { getActiveCases } from './activeCases';
 import * as contZones from './contZones';
 import {initApp} from './authentication';
 
+
 let red_obstacle = {};
 let orange_obstacle = {};
 let green_obstacle = {};
@@ -109,7 +110,9 @@ map.on("load", function (e) {
             },
         });
     }
+
     initApp();
+
 });
 
 
@@ -193,7 +196,9 @@ directions.on("route", (e) => {
         report.id = "report-" + e.id;
 
         // Add the response to the individual report created above.
+
         var heading = report.appendChild(document.createElement("h5"));
+
 
         // Set the class type based on clear value.
         if (red_danger == true || orange_danger == true) {
@@ -210,7 +215,9 @@ directions.on("route", (e) => {
         // Add details to the individual report.
         var details = report.appendChild(document.createElement("div"));
         details.innerHTML = "This route " + detail;
+
         report.appendChild(document.createElement("p"));
+
 
     });
 
@@ -222,7 +229,9 @@ directions.on("route", (e) => {
             let report = reports.appendChild(document.createElement("div"));
             report.className = "item";
             report.id = "navMap-report";
+
             let heading = report.appendChild(document.createElement("h5"));
+
 
             heading.innerHTML = "Active Cases: ";
             heading.className = "navMap-casesHead";
@@ -231,7 +240,9 @@ directions.on("route", (e) => {
             details.innerHTML = cases[0] + " : " + cases[1];    //src
             details = report.appendChild(document.createElement("div"));
             details.innerHTML = cases[2] + " : " + cases[3];    //dest
+
             report.appendChild(document.createElement("p"));
+
         });
     }
 
