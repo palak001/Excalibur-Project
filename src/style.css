@@ -86,8 +86,15 @@ a:hover {
     font-weight: 400;
 }
 
+<<<<<<< HEAD
 .reports .item.active .title,
 .reports .item .title:hover {
+=======
+
+.reports .item.active .title,
+.reports .item .title:hover {
+
+>>>>>>> 6fc377df3543a40565e38fb6ddcbd5adfd89278a
     color: #8cc63f;
 }
 
