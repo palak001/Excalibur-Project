@@ -1,0 +1,22 @@
+{
+  "name": "nav-map",
+  "version": "1.0.0",
+  "description": "map project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open"
+  },
+  "author": "Team Amigos",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "dev": "^0.1.3",
+    "html-webpack-plugin": "^4.5.0"
+  }
+}
