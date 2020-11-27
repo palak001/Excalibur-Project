@@ -1,6 +1,6 @@
 // import {reverseGeoCoding} from './reverseGeocoding';
 
-let reverseGeoCoding = async (x, y) => {
+let reverseGeoCodingSrc = async (x, y) => {
 
     let mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken })
     await mapboxClient.geocoding.reverseGeocode({
@@ -8,8 +8,20 @@ let reverseGeoCoding = async (x, y) => {
     })
         .send()
         .then(response => {
-            let ans = response.body.features[0].place_name;
-            return (String(ans));
+            srcState = response.body.features[0].place_name;
+        });
+}
+
+
+let reverseGeoCodingDest = async (x, y) => {
+
+    let mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken })
+    await mapboxClient.geocoding.reverseGeocode({
+        query: [x, y]
+    })
+        .send()
+        .then(response => {
+            destState = response.body.features[0].place_name;
         });
 }
 
@@ -22,6 +34,7 @@ let getTokens = (el) => {
     return tokens;
 }
 
+let srcState, srcDist, destState, destDist;
 
 export let getActiveCases = async () => {
     const el = document.getElementsByClassName('mapboxgl-ctrl-geocoder');
@@ -31,41 +44,42 @@ export let getActiveCases = async () => {
     let srcTokens = getTokens(src);
     let destTokens = getTokens(dest);
 
-    let srcState, srcDist, destState, destDist;
+    
 
-    // if(isNaN(srcTokens[0])==false){  //it is a coordinate
-    //     let long = parseFloat(srcTokens[0]);
-    //     let lat = parseFloat(srcTokens[1]);
-    //     srcState= await reverseGeoCoding(long, lat);
-    //     console.log(srcState);
-    //     // srcTokens = getTokens(srcState);
-    // }
-    // else{
+    if(isNaN(srcTokens[0])==false){  //it is a coordinate
+        let long = parseFloat(srcTokens[0]);
+        let lat = parseFloat(srcTokens[1]);
+        await reverseGeoCodingSrc(long, lat, srcState);
+        // console.log(srcState);
+        srcTokens = getTokens(srcState);
+    }
+    
     srcState = srcTokens[srcTokens.length - 2];
 
     if (srcTokens.length > 2)
         srcDist = srcTokens[srcTokens.length - 3];
     else
         srcDist = "null";
-    // }
+    
 
 
 
-    // if(isNaN(destTokens[0])==false){  //it is a coordinate
-    //     let long = parseFloat(destTokens[0]);
-    //     let lat = parseFloat(destTokens[1]);
-    //     destState= await reverseGeoCoding(long, lat);
-    //     console.log(destState);
-    //     // destTokens = getTokens(destState);
-    // }
-    // else{
+    if(isNaN(destTokens[0])==false){  //it is a coordinate
+        let long = parseFloat(destTokens[0]);
+        let lat = parseFloat(destTokens[1]);
+        await reverseGeoCodingDest(long, lat, destState);
+        // console.log(destState);
+        destTokens = getTokens(destState);
+        // console.log(destTokens);
+    }
+    
     destState = destTokens[destTokens.length - 2];
 
     if (destTokens.length > 2)
         destDist = destTokens[destTokens.length - 3];
     else
         destDist = "null";
-    // }
+    
 
 
     let casesData = await fetch('https://api.covid19india.org/v2/state_district_wise.json');
