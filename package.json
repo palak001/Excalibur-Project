@@ -7,11 +7,11 @@
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open",
-    "deploy": "gh-pages -d ./"
+    "deploy": "gh-pages -d src"
   },
   "author": "Team Amigos",
   "license": "ISC",
-  "homepage": "https://palak001.github.io/Excalibur-Project/dist/home.html",
+  "homepage": "https://palak001.github.io/Excalibur-Project/",
   "devDependencies": {
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
