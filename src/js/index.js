@@ -38,9 +38,9 @@ map.on("load", function (e) {
             },
             layout: {},
             paint: {
-                "fill-color": "#FF0000",
-                "fill-opacity": 0.8,
-                "fill-outline-color": "#FF0000",
+                "fill-color": "#972D07",
+                "fill-opacity": 0.5,
+                "fill-outline-color": "#972D07",
             },
         });
 
@@ -54,9 +54,9 @@ map.on("load", function (e) {
             },
             layout: {},
             paint: {
-                "fill-color": "#ff4500",
-                "fill-opacity": 0.8,
-                "fill-outline-color": "#ff4500",
+                "fill-color": "#FF773D",
+                "fill-opacity": 0.5,
+                "fill-outline-color": "#FF773D",
             },
         });
 
@@ -70,7 +70,7 @@ map.on("load", function (e) {
             layout: {},
             paint: {
                 "fill-color": "#74c476",
-                "fill-opacity": 0.8,
+                "fill-opacity": 0.5,
                 "fill-outline-color": "#74c476",
             },
         });

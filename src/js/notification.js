@@ -1,4 +1,6 @@
 import { sendEmail } from './sendEmail.js';
+// import { geoLocatorON, modifyGeoLocatorON } from './globalVariable.js';
+
 const client = stitch.Stitch.initializeDefaultAppClient("location_services-bakdh");
 const db = client.getServiceClient(stitch.RemoteMongoClient.factory, "mongodb-atlas").db("location_services");
 
@@ -7,7 +9,13 @@ let currentLocationMarker;
 client.auth.loginWithCredential(new stitch.AnonymousCredential());
 
 // Add geolocate control to the map.
-let geolocate = new mapboxgl.GeolocateControl();
+let geolocate = new mapboxgl.GeolocateControl({
+    // positionOptions: {
+    //     enableHighAccuracy: true
+    // },
+    // trackUserLocation: true
+});
+
 map.addControl(geolocate);
 
 geolocate.on('geolocate', async (e) => {
@@ -47,7 +55,7 @@ geolocate.on('geolocate', async (e) => {
             "layout": {},
             "paint": {
                 "fill-color": "#088",
-                "fill-opacity": 0.8
+                "fill-opacity": 0.3
             }
         });
     });
@@ -67,7 +75,6 @@ map.on("click", async (e) => {
         }
     }, { projection: { name: 1, zone: 1 }}).asArray();
     if(result.length > 0) {
-        // console.log(result);
         sendEmail("palak7372@gmail.com", result[0].name, result[0].zone);
     }
 });
