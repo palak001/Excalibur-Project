@@ -14,8 +14,6 @@ export let green_zone = {
 };
 
 
-
-
 export let red_clearances = "red_clearances";
 export let orange_clearances = "orange_clearances";
 export let green_clearances = "green_clearances";
@@ -42,11 +40,8 @@ export const getGeocodedDistrict = async (containment_zones) => {
             .send()
             .then(function (response) {
                 if (response.body.features[0] != undefined) {
-
                     const zone_color = (containment_zones.zones[i].zone);
                     if (zone_color === "Red") {
-
-
                         red_zone.features.push({
                             type: "Feature",
                             geometry: {
@@ -57,12 +52,9 @@ export const getGeocodedDistrict = async (containment_zones) => {
                                 clearance: "13' 2",
                             },
                         });
-
-
                     }
 
                     else if (zone_color === "Orange") {
-
                         orange_zone.features.push({
                             type: "Feature",
                             geometry: {
@@ -73,7 +65,6 @@ export const getGeocodedDistrict = async (containment_zones) => {
                                 clearance: "13' 2",
                             },
                         });
-
                     }
                     else if (zone_color === "Green") {
 
