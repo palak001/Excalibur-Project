@@ -171,7 +171,7 @@ directions.on("route", (e) => {
 
         if (red_danger == true) {
             collision = "is bad.";
-            detail = "passes through a red zone";
+            detail = "passes through a red zone. Avoid if possible";
             emoji = ":(";
             report.classList.add("warning");
             map.setPaintProperty("route" + e.id, "line-color", "#de2d26");
@@ -179,14 +179,14 @@ directions.on("route", (e) => {
         }
         else if (orange_danger == true) {
             collision = "is not good";
-            detail = "passes through an orange zone";
+            detail = "passes through an orange zone. Please take all the necessary precautions";
             emoji = ":(";
             report.classList.add("warning");
             map.setPaintProperty("route" + e.id, "line-color", "#ff4500");
         }
         else {
             collision = "is good!";
-            detail = "does not pass through an orange or a red zone";
+            detail = "does not pass through an orange or a red zone. Have a safe journey!";
             emoji = "✔️";
             map.setPaintProperty("route" + e.id, "line-color", "#74c476");
         }
