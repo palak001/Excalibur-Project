@@ -56,7 +56,7 @@ export const showContainmentZones = () => {
     }
     const getGeocodedDistrict = async (containment_zones) => {
         let mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-        console.log(containment_zones.zones.length);
+        // console.log(containment_zones.zones.length);
         for (i = 1; i < containment_zones.zones.length; i++) {
             // console.log(clearances);
             const district = JSON.stringify(containment_zones.zones[i].district);

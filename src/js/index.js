@@ -22,14 +22,10 @@ document.querySelector('#navmap-btn-green').addEventListener('click', () => {
 
 /*To get containment zones */
 map.on("load", function (e) {
-
     contZones.getContaimentZones().then(() => {
-
         red_obstacle = turf.buffer(contZones.red_zone, 10, { units: "kilometers" });
         orange_obstacle = turf.buffer(contZones.orange_zone, 10, { units: "kilometers" });
         green_obstacle = turf.buffer(contZones.green_zone, 10, { units: "kilometers" });
-
-
         console.log('layer added');
         map.addLayer({
             id: contZones.red_clearances,
@@ -45,8 +41,6 @@ map.on("load", function (e) {
                 "fill-outline-color": "#972D07",
             },
         });
-
-
         map.addLayer({
             id: contZones.orange_clearances,
             type: "fill",
@@ -61,7 +55,6 @@ map.on("load", function (e) {
                 "fill-outline-color": "#FF773D",
             },
         });
-
         map.addLayer({
             id: contZones.green_clearances,
             type: "fill",
@@ -76,15 +69,11 @@ map.on("load", function (e) {
                 "fill-outline-color": "#74c476",
             },
         });
-
-
         contZones.toggleRedZones();
         contZones.toggleOrangeZones();
         contZones.toggleGreenZones();
 
     });
-
-
     /*For displaying routes */
     for (let i = 0; i <= 2; i++) {
         map.addSource("route" + i, {
@@ -93,7 +82,6 @@ map.on("load", function (e) {
                 type: "Feature",
             },
         });
-
         map.addLayer({
             id: "route" + i,
             type: "line",
@@ -110,7 +98,6 @@ map.on("load", function (e) {
             },
         });
     }
-
     initApp();
 
 });

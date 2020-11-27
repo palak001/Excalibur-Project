@@ -29,10 +29,10 @@
 
     <div id="map"></div>
     <div class="sidebar">
-        <div id="user">
+        <div id="user" style="font-family: 'Montserrat', sans-serif; font-weight: bold;">
             <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin: 10px;">
                 <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-              </svg>
+            </svg>
         </div>
         
         <div style="align-items: center; display: flex; justify-content: space-around; margin-top: 5px; vertical-align: baseline;">
@@ -59,16 +59,16 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title">Login </h2>
+                        <h2 class="modal-title">Sign up </h2>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
                         <input class="mdl-textfield__input"  type="text" id="email" name="email" placeholder="Email" style="padding: 10px"/>
                         <input class="mdl-textfield__input"  type="password" id="password" name="password" placeholder="Password" style="padding: 10px"/>
                         <br>
-                        <button class="btn btn-primary mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-up" name="signup">Sign Up</button>
+                        <button class="btn btn-primary" id="quickstart-sign-up" name="signup">Sign Up</button>
                         <a href="#" id="login" style="display: absolute; float: right;">Already Signed up?</a>
-                        <!-- <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Sign In</button> -->
+                        <!-- <button disabled class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Sign In</button> -->
                         <!-- <button class="mdl-button mdl-js-button mdl-button--raised" disabled id="quickstart-verify-email" name="verify-email">Send Email Verification</button>
                         <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-password-reset" name="verify-email">Send Password Reset Email</button> -->
 
