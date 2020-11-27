@@ -25,9 +25,9 @@ map.on("load", function (e) {
 
     contZones.getContaimentZones().then(() => {
 
-        red_obstacle = turf.buffer(contZones.red_zone, 10, { units: "kilometers" });
-        orange_obstacle = turf.buffer(contZones.orange_zone, 10, { units: "kilometers" });
-        green_obstacle = turf.buffer(contZones.green_zone, 10, { units: "kilometers" });
+        red_obstacle = turf.buffer(contZones.red_zone, 30, { units: "kilometers" });
+        orange_obstacle = turf.buffer(contZones.orange_zone, 30, { units: "kilometers" });
+        green_obstacle = turf.buffer(contZones.green_zone, 30, { units: "kilometers" });
 
 
         console.log('layer added');
