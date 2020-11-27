@@ -23,9 +23,9 @@ document.querySelector('#navmap-btn-green').addEventListener('click', () => {
 /*To get containment zones */
 map.on("load", function (e) {
     contZones.getContaimentZones().then(() => {
-        red_obstacle = turf.buffer(contZones.red_zone, 10, { units: "kilometers" });
-        orange_obstacle = turf.buffer(contZones.orange_zone, 10, { units: "kilometers" });
-        green_obstacle = turf.buffer(contZones.green_zone, 10, { units: "kilometers" });
+        red_obstacle = turf.buffer(contZones.red_zone, 15, { units: "kilometers" });
+        orange_obstacle = turf.buffer(contZones.orange_zone, 15, { units: "kilometers" });
+        green_obstacle = turf.buffer(contZones.green_zone, 15, { units: "kilometers" });
         console.log('layer added');
         map.addLayer({
             id: contZones.red_clearances,
