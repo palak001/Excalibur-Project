@@ -7,23 +7,7 @@ const client = stitch.Stitch.initializeDefaultAppClient("location_services-bakdh
 const db = client.getServiceClient(stitch.RemoteMongoClient.factory, "mongodb-atlas").db("location_services");
 
 let currentLocationMarker;
-map.on('load', () => {
-    let geoLocateButton = document.getElementsByClassName('mapboxgl-ctrl-geolocate')[0];
-    geoLocateButton.addEventListener('click', () => {
-        if(geoLocateButton.getAttribute('aria-pressed') === 'false') {
-            currentLocationMarker.remove();
-            for(let i = 0; i < removeLayer.length; i++) {
-                let layer = removeLayer[i];
-                var mapLayer = map.getLayer(layer.name);
-                if(typeof mapLayer !== 'undefined') {
-                // Remove map layer & source.
-                map.removeLayer(layer.name).removeSource(layer.name);
-                }
-            }
-        }
-    });
-})
-
+let geoLocateButton;
 
 client.auth.loginWithCredential(new stitch.AnonymousCredential());
 
@@ -38,74 +22,92 @@ let geolocate = new mapboxgl.GeolocateControl({
 
 map.addControl(geolocate);
 
-geolocate.on('geolocate', async (e) => {
-    // console.log(document.getElementById('user'));
-    if(document.getElementById('user').style.display == 'none') {
-        alert("Please Sign up for location based notification.");
-        document.getElementsByClassName('mapboxgl-ctrl-geolocate')[0].click();
-    }
-    else {
-
-        let long = e.coords.longitude;
-        let lat = e.coords.latitude;
-        let position = [long, lat];
-        // console.log(position);
-
-        if(currentLocationMarker == undefined) {
-            currentLocationMarker = new mapboxgl.Marker({
-                draggable: true
-            })
-            .setLngLat([75.9638, 29.0973])
-            .addTo(map);
-        }
-        else {
+map.on('load', () => {
+    geoLocateButton = document.getElementsByClassName('mapboxgl-ctrl-geolocate')[0];
+    geoLocateButton.addEventListener('click', () => {
+        if(geoLocateButton.getAttribute('aria-pressed') === 'false') {
             currentLocationMarker.remove();
-            currentLocationMarker = new mapboxgl.Marker({
-                draggable: true
-            })
-            .setLngLat([75.9638, 29.0973])
-            .addTo(map);
-        }
-
-        
-        currentLocationMarker.on('dragend', onDragEnd);
-
-        let fences = await db.collection("geofences").find({
-            region: {
-                $near: {
-                    $geometry: {
-                        type: "Point",
-                        coordinates: [75.9638, 29.0973]
-                    },
-                    $maxDistance: 50000000
-                    
+            for(let i = 0; i < removeLayer.length; i++) {
+                let layer = removeLayer[i];
+                var mapLayer = map.getLayer(layer.name);
+                if(typeof mapLayer !== 'undefined') {
+                // Remove map layer & source.
+                map.removeLayer(layer.name).removeSource(layer.name);
                 }
             }
-        }).asArray();
+        }
+    });
 
-        fences.forEach(fence => {
-            removeLayer.push(fence);
-            map.addSource(fence.name, {
-                "type": "geojson",
-                "data": {
-                    "type": "Feature",
-                    "geometry": fence.region
+    geolocate.on('geolocate', async (e) => {
+        // console.log(document.getElementById('user'));
+        if(document.getElementById('user').style.display == 'none') {
+            alert("Please Sign up for location based notification.");
+            document.getElementsByClassName('mapboxgl-ctrl-geolocate')[0].click();
+        }
+        else {
+            console.log(geoLocateButton);
+            let long = e.coords.longitude;
+            let lat = e.coords.latitude;
+            let position = [long, lat];
+            // console.log(position);
+    
+            if(currentLocationMarker == undefined) {
+                currentLocationMarker = new mapboxgl.Marker({
+                    draggable: true
+                })
+                .setLngLat([75.9638, 29.0973])
+                .addTo(map);
+            }
+            else {
+                currentLocationMarker.remove();
+                currentLocationMarker = new mapboxgl.Marker({
+                    draggable: true
+                })
+                .setLngLat([75.9638, 29.0973])
+                .addTo(map);
+            }
+    
+            
+            currentLocationMarker.on('dragend', onDragEnd);
+    
+            let fences = await db.collection("geofences").find({
+                region: {
+                    $near: {
+                        $geometry: {
+                            type: "Point",
+                            coordinates: [75.9638, 29.0973]
+                        },
+                        $maxDistance: 50000000
+                        
+                    }
                 }
+            }).asArray();
+    
+            fences.forEach(fence => {
+                removeLayer.push(fence);
+                map.addSource(fence.name, {
+                    "type": "geojson",
+                    "data": {
+                        "type": "Feature",
+                        "geometry": fence.region
+                    }
+                });
+                /* for showing layers on the graph */
+                map.addLayer({
+                    "id": fence.name,
+                    "type": "fill",
+                    "source": fence.name,
+                    "layout": {},
+                    "paint": {
+                        "fill-color": "#088",
+                        "fill-opacity": 0.3
+                    }
+                });
             });
-            /* for showing layers on the graph */
-            map.addLayer({
-                "id": fence.name,
-                "type": "fill",
-                "source": fence.name,
-                "layout": {},
-                "paint": {
-                    "fill-color": "#088",
-                    "fill-opacity": 0.3
-                }
-            });
-        });
-    }
-});
+        }
+    });
+})
+
 
 
 
