@@ -107,6 +107,11 @@ firebase.auth().onAuthStateChanged(function(user) {
   document.getElementById('quickstart-verify-email').disabled = true;
   if (user) {
     // User is signed in.
+    console.log("user");
+    console.log(user.email);
+    
+    document.getElementById("user").style.display = "";
+    document.getElementById("userId").textContent = user.email;
     var displayName = user.displayName;
     var email = user.email;
     var emailVerified = user.emailVerified;
@@ -121,6 +126,9 @@ firebase.auth().onAuthStateChanged(function(user) {
       document.getElementById('quickstart-verify-email').disabled = false;
     }
   } else {
+
+    document.getElementById("user").style.display = "none";
+
     // User is signed out.
    // document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
     document.getElementById('quickstart-sign-in').textContent = 'Sign in';
@@ -135,4 +143,3 @@ document.getElementById('quickstart-sign-up').addEventListener('click', handleSi
 document.getElementById('quickstart-verify-email').addEventListener('click', sendEmailVerification, false);
 document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
 }
-
