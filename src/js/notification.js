@@ -1,6 +1,7 @@
 import { sendEmail } from './sendEmail.js';
 // import { geoLocatorON, modifyGeoLocatorON } from './globalVariable.js';
 
+
 const client = stitch.Stitch.initializeDefaultAppClient("location_services-bakdh");
 const db = client.getServiceClient(stitch.RemoteMongoClient.factory, "mongodb-atlas").db("location_services");
 
@@ -38,7 +39,6 @@ geolocate.on('geolocate', async (e) => {
     }).asArray();
 
     currentLocationMarker = new mapboxgl.Marker().setLngLat([73.3119, 28.0229]).addTo(map);
-    // console.log(fences);
     fences.forEach(fence => {
         map.addSource(fence.name, {
             "type": "geojson",
@@ -78,3 +78,4 @@ map.on("click", async (e) => {
         sendEmail("palak7372@gmail.com", result[0].name, result[0].zone);
     }
 });
+
