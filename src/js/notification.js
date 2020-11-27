@@ -29,9 +29,9 @@ client.auth.loginWithCredential(new stitch.AnonymousCredential());
 
 // Add geolocate control to the map.
 let geolocate = new mapboxgl.GeolocateControl({
-    // positionOptions: {
-    //     enableHighAccuracy: true
-    // },
+    positionOptions: {
+        enableHighAccuracy: true
+    },
     trackUserLocation: true
 });
 
@@ -108,22 +108,6 @@ geolocate.on('geolocate', async (e) => {
 });
 
 
-// map.on("click", async (e) => {
-//     currentLocationMarker.setLngLat([e.lngLat.lng, e.lngLat.lat]);
-//     let result = await db.collection("geofences").find({
-//         region: {
-//             $geoIntersects: {
-//                 $geometry: {
-//                     type: "Point",
-//                     coordinates: [e.lngLat.lng, e.lngLat.lat]
-//                 }
-//             }
-//         }
-//     }, { projection: { name: 1, zone: 1 }}).asArray();
-//     if(result.length > 0) {
-//         sendEmail(result[0].name, result[0].zone);
-//     }
-// });
 
 async function onDragEnd() {
     // currentLocationMarker.setLngLat([e.lngLat.lng, e.lngLat.lat]);
