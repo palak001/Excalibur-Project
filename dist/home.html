@@ -13,9 +13,14 @@
     
 
     <style>
-    
+    /* *{
+        border: 1px green solid;
+    } */
+    body {
+        background-color: #ffe4e1;
+    }
     .carousel {
-    background:#7209b7;
+    background: black;
 }
 
 .carousel-item {
@@ -31,7 +36,7 @@
         
         
 .footer {
-  background-color: #512DA8;
+  background-color: black;
   margin: 0px auto;
   padding: 20px 0px; 
 margin-top: 30px;
@@ -56,32 +61,33 @@ margin-top: 30px;
         <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
     
     
-    <div style = "height: 40px; background-color: #512DA8" class = "fixed-top">
+    <!-- <div style = "height: 40px; background-color: #512DA8" class = "fixed-top">
         <a id="loginformlink" style = "color: floralwhite; position: absolute; right: 30px; font-size: 20px">
              
         </a>
     </div>
-    
+     -->
 
 
-   <header class="jumbotron" style = "background-color: #9575CD">
+   <header class="jumbotron" style = "background-color: #ffe4e1">
         <div class="container">
             <div class="row row-header">
                 <div class="col-12 col-sm-6 offset-sm-3">
-                    <h1>Welcome to Mapible </h1>
-                    <p style = "text-align: center">Do you wanna avoid covid-active zones while traveling. Use our app to know   whether your path is safe and choose the safer paths. Wanna get notified when you enter a covid-active zone!!! You can sign up with us too</p>
+                    <h1 style="font-weight: 800; color: black; font-size: 100px; display: inline;">Mapible </h1>
+                    <a href = "index.html" style = "color:black; vertical-align: top;">
+                        <svg width="7em" height="7em" viewBox="0 0 16 16" class="bi bi-geo-alt" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M12.166 8.94C12.696 7.867 13 6.862 13 6A5 5 0 0 0 3 6c0 .862.305 1.867.834 2.94.524 1.062 1.234 2.12 1.96 3.07A31.481 31.481 0 0 0 8 14.58l.208-.22a31.493 31.493 0 0 0 1.998-2.35c.726-.95 1.436-2.008 1.96-3.07zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                            <path fill-rule="evenodd" d="M8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                    </a>
+                    <p style = "color: black";>
+                        One stop to keep you travel safe in COVID.
+                    </p>
                 </div>
                 
                 
             </div>  
-            
-            <div class = "row">
-                <div class="col-12 offset-5 align-self-center">
-                    <a class ="btn btn-warning btn-lg " href = "index.html" style = "color: white">
-                     Go to map</a>
-                </div>
-            </div>
-            
+          
         </div>
     </header>
     
@@ -139,27 +145,27 @@ margin-top: 30px;
     </div>
 
     
+    <h4 style="font-size: 50px; font-weight: 800; text-align: center; padding: 50px;">Travel during the COVID-19 Pandemic</h4>
     
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-12">
-               <h4>Travel during the COVID-19 Pandemic</h4>
-               <hr>
-            </div>
-        </div>
+        <!-- <div class="row">
+            <div class="col-12 col-sm-12"> -->
+               <!-- <hr> -->
+            <!-- </div> -->
+        <!-- </div> -->
     
         
         <div class="row row-content">
             <div class="col-12 col-sm-12">
                 <div id="accordion">
                     <div class="card">
-                        <div class="card-header" role="tab" id="peterhead" style = "background-color: #9575CD">
+                        <div class="card-header" role="tab" id="peterhead" style="background-color: black;">
                             <h4 class="mb-0">
-                                <a data-toggle="collapse" data-target="#peter" style = "color: floralwhite">Anticipate your travel needs</a>
+                                <a data-toggle="collapse" data-target="#peter" style = "color:white; ">Anticipate your travel needs</a>
                             </h4>
                         </div>
                          <div class="collapse show" role="tabpanel" id="peter" data-parent="#accordion">
-                            <div class="card-body">
+                            <div class="card-body"  style="background-color: #ffe4e1;">
                                 <h5 class="d-none d-sm-block">Bring a mask to wear in public places and on public transportation.
                                 Pack hand sanitizer with at least 60% alcohol. Keep this within reach.
                                 Bring enough of your medicine to last you for the entire trip.
@@ -169,25 +175,25 @@ margin-top: 30px;
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header" role="tab" id="dhanasekaranhead" style = "background-color: #9575CD">
+                        <div class="card-header" role="tab" id="dhanasekaranhead" style = "background-color: black">
                             <h4 class="mb-0">
                                 <a data-toggle="collapse" data-target="#dhanasekaran" style = "color: floralwhite">Check Travel Restrictions</a>
                             </h4>
                         </div>
                         <div class="collapse" role="tabpanel" id="dhanasekaran" data-parent="#accordion">
-                            <div class="card-body">
+                            <div class="card-body" style="background-color: #ffe4e1;">
                                 <h5 class="d-none d-sm-block">State, local, and territorial governments may have travel restrictions in place, including testing requirements, stay-at-home orders, and quarantine requirements upon arrival. Follow state, local, and territorial travel restrictions. For up-to-date information and travel guidance, check the state, territorial, tribal and local health department where you are, along your route, and where you are going. Prepare to be flexible during your trip as restrictions and policies may change during your travel.</h5>
                             </div>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header" role="tab" id="agumbehead" style = "background-color: #9575CD">
+                        <div class="card-header" role="tab" id="agumbehead" style = "background-color: black">
                             <h4 class="mb-0">
                                 <a data-toggle="collapse" data-target="#agumbe" style = "color: floralwhite">After you travel</a>
                             </h4>
                         </div>
                          <div class="collapse" role="tabpanel" id="agumbe" data-parent="#accordion">
-                            <div class="card-body">
+                            <div class="card-body" style="background-color: #ffe4e1;">
                                 <h5 class="d-none d-sm-block" >When you are around others, stay at least 6 feet (about 2 arm lengths) from anyone who did not travel with you, particularly in crowded areas. It’s important to do this everywhere — both indoors and outdoors.
                                 Wear a mask to keep your nose and mouth covered when you are in shared spaces outside of your home, including when using public transportation.
                                 If there are people in the household who did not travel with you, wear a mask and ask everyone in the household to wear masks in shared spaces inside your home for 14 days after travel.
@@ -208,20 +214,20 @@ margin-top: 30px;
     
     <div class = "container">
     
-        <div class = "row">
+        <!-- <div class = "row">
         
             <div class = "col-12">
             
-                <div class="card">
-                    <h3 class="card-header text-white" style = "background-color: #512DA8">About Mapible</h3>
+                <div class="card"> -->
+                    <!-- <h3 class="card-header text-white" style = "background-color: black">About Mapible</h3>
                     <div class="card-body ">
                         <h5 class = "d-none d-sm-block">Mapible helps you avoide covid containment zones while you are traveling by providing you the status of various paths you can take thus helping you choose safer paths. If the user wants to be notified when entering and leaving a containment zone, we provide a sign in option as well. With that we provide the direction, distance need to be travelled and time required to reach the destination using various possible paths.</h5>
-                    </div>
-                </div>
+                    </div> -->
+                <!-- </div> -->
                 
-            </div>
+            <!-- </div>
         
-        </div>
+        </div>-->
         
     </div>
     
@@ -230,12 +236,27 @@ margin-top: 30px;
 
 
     <footer class="footer">
-        <div class="container" style = "height: 20px;">
-            <div class="row ">
-                <div class = "col-12 offset-sm-8" style = "color: floralwhite">
-                <h4 style = "margin-top: -5px;">Developed with love by Team Amigos</h4>
-                </div>
-           </div>
+        <div style="display: flex; flex-direction: column; justify-content: center; align-content: center;
+        align-items: center;">
+            <div>
+                <h4 class="card-header text-white" style = "font-size: 50px;background-color: black; ">About Mapible</h4>
+            </div>
+            <div style="text-align: center; padding-right: 100px; padding-left: 100px; padding: 30px;">
+                <p style="padding-left: 100px; padding-right: 100px; text-align: center; color: white; font-size: 20px; line-height: 30px;">Mapible helps you avoide covid containment zones while you are traveling by providing you the status of various paths you can take thus helping you choose safer paths. If the user wants to be notified when entering and leaving a containment zone, we provide a sign in option as well. With that we provide the direction, distance need to be travelled and time required to reach the destination using various possible paths.</p>
+            </div>
+             <h4 style = "margin-top: -5px; color: white; font-size: 20px;">Developed with love by Team Amigos</h4>
+
+        </div>
+        
+        
+            <!-- <div class="card-body "> -->
+                
+
+            <!-- <div class="row "> -->
+                <!-- <div class="container" style = "height: 20px;"> -->
+                    <!-- <div class = "col-12 offset-sm-8" style = "color: floralwhite"> -->
+                <!-- </div> -->
+           <!-- </div> -->
         </div>
     </footer>
     <script src="../node_modules/jquery/dist/jquery.slim.min.js"></script>
