@@ -21,7 +21,7 @@ let geolocate = new mapboxgl.GeolocateControl({
 
 
 map.addControl(geolocate);
-
+let status = true;
 map.on('load', () => {
     geoLocateButton = document.getElementsByClassName('mapboxgl-ctrl-geolocate')[0];
     geoLocateButton.addEventListener('click', () => {
@@ -30,6 +30,8 @@ map.on('load', () => {
             for(let i = 0; i < removeLayer.length; i++) {
                 let layer = removeLayer[i];
                 var mapLayer = map.getLayer(layer.name);
+                status = false;
+
                 if(typeof mapLayer !== 'undefined') {
                 // Remove map layer & source.
                 map.removeLayer(layer.name).removeSource(layer.name);
@@ -40,7 +42,12 @@ map.on('load', () => {
 
     geolocate.on('geolocate', async (e) => {
         // console.log(document.getElementById('user'));
-        if(document.getElementById('user').style.display == 'none') {
+        console.log(status);
+        if(status == false) {
+            // do nothing
+            console.log("do nothing!");
+        }
+        else if(document.getElementById('user').style.display == 'none') {
             alert("Please Sign up for location based notification.");
             document.getElementsByClassName('mapboxgl-ctrl-geolocate')[0].click();
         }
