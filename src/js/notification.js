@@ -1,5 +1,4 @@
 import { sendEmail } from './sendEmail.js';
-import {login, userMail} from './globalVariable.js';
 // import { geoLocatorON, modifyGeoLocatorON } from './globalVariable.js';
 
 const client = stitch.Stitch.initializeDefaultAppClient("location_services-bakdh");
